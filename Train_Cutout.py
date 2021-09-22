@@ -45,7 +45,7 @@ if __name__ == '__main__':
     train_data, vali_data, test_data, another_test_data = modify_generator(preprocessing_function=cutout_preprocessing,dataset_path = 'archive/')
     ResNet_Model = build_ResNet18()
 
-    ResNet_Model.compile(optimizer=tf.keras.optimizers.Adagrad(learning_rate=1e-4),
+    ResNet_Model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=1e-4),
                          loss=tf.keras.losses.BinaryCrossentropy(), metrics=['accuracy'])
 
     ResNet_Model.summary()

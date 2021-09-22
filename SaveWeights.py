@@ -1,6 +1,7 @@
 import tensorflow as tf
 import numpy as np
 
+
 class EarlyStoppingAtMinLoss(tf.keras.callbacks.Callback):
     """Stop training when the loss is at its min, i.e. the loss stops decreasing.
 
@@ -24,7 +25,7 @@ class EarlyStoppingAtMinLoss(tf.keras.callbacks.Callback):
         self.best = np.Inf
 
     def on_epoch_end(self, epoch, logs=None):
-        current = logs.get("loss")
+        current = logs.get("val_loss")
         if np.less(current, self.best):
             self.best = current
             self.wait = 0
@@ -35,7 +36,7 @@ class EarlyStoppingAtMinLoss(tf.keras.callbacks.Callback):
             if self.wait >= self.patience:
                 self.stopped_epoch = epoch
                 self.model.stop_training = True
-                print("Restoring model weights from the end of the best epoch.")
+                print("\n Restoring model weights from the end of the best epoch.")
                 self.model.set_weights(self.best_weights)
 
     def on_train_end(self, logs=None):
