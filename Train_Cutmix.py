@@ -3,7 +3,7 @@ import numpy as np
 
 from ResNet import build_ResNet18
 from SaveWeights import EarlyStoppingAtMinLoss
-from Cutmix_data import generate_train_data
+from Cutmix import generate_train_data
 from dataset_utils import load_test_vali_data
 
 
