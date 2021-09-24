@@ -3,7 +3,7 @@ import numpy as np
 
 from ResNet import build_ResNet18
 from SaveWeights import EarlyStoppingAtMinLoss
-from Canny import generate_data
+from EdgeDetection import generate_data
 
 if __name__ == '__main__':
     train_images,train_labels,vali_images,vali_labels,test_images,test_labels,test_another_images,test_antoher_labels = generate_data()
@@ -17,8 +17,8 @@ if __name__ == '__main__':
                                 callbacks=[EarlyStop], shuffle=True)
     test_loss, test_accuracy = resnet.evaluate(test_images,test_labels)
     another_test_loss, another_test_accuracy = resnet.evaluate(test_another_images,test_antoher_labels)
-    np.savetxt('history/ValidationLoss_Canny.txt', resnet_history.history['val_loss'])
-    np.savetxt('history/ValidationAccuracy_Canny.txt', resnet_history.history['val_accuracy'])
-    np.savetxt('history/TrainingLoss_Canny.txt', resnet_history.history['loss'])
-    np.savetxt('history/TrainingAccuracy_Canny.txt', resnet_history.history['accuracy'])
-    np.savetxt('history/TestResult_Canny.txt', np.array([test_loss, test_accuracy, another_test_loss, another_test_accuracy]))
+    np.savetxt('history/ValidationLoss_Edge.txt', resnet_history.history['val_loss'])
+    np.savetxt('history/ValidationAccuracy_Edge.txt', resnet_history.history['val_accuracy'])
+    np.savetxt('history/TrainingLoss_Edge.txt', resnet_history.history['loss'])
+    np.savetxt('history/TrainingAccuracy_Edge.txt', resnet_history.history['accuracy'])
+    np.savetxt('history/TestResult_Edge.txt', np.array([test_loss, test_accuracy, another_test_loss, another_test_accuracy]))

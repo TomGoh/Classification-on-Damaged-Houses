@@ -10,20 +10,16 @@ def canny(image):
 
 
 
-def enhance_data(dataset, mask):
-    mask[mask==255]=100
+def enhance_data(mask):
     list = []
     for i in range(mask.shape[0]):
         list.append(np.expand_dims(mask[i], 2).repeat(3, axis=2))
-    # print(np.array(list).shape)
-    dataset1=dataset+np.array(list,dtype=np.float32)
-    dataset1[dataset1>255]=255
 
-    return dataset1/255.
+    return np.array(list,dtype=np.float32)/255.
 
 
 def generate_data():
-    BATCH_SIZE=32
+
     train_damage, place_holder1 = load_folder_data('archive/train_another/damage/', damaged=True) # list
     train_no_damage,place_holder2=load_folder_data('archive/train_another/no_damage/',damaged=False) #list
     train_images=np.array(train_damage+train_no_damage,dtype=np.float32)
@@ -36,7 +32,12 @@ def generate_data():
     test_mask = np.array(list(map(lambda x: canny(x), test_images)), dtype=np.float32)
     test_anther_mask = np.array(list(map(lambda x: canny(x), test_another_images)), dtype=np.float32)
 
-    return enhance_data(train_images,train_mask),train_labels,enhance_data(vali_images,vali_mask),\
-           vali_labels,enhance_data(test_images,test_mask),test_labels,enhance_data(test_another_images,test_anther_mask),\
+    return enhance_data(train_mask),train_labels,enhance_data(vali_mask),\
+           vali_labels,enhance_data(test_mask),test_labels,enhance_data(test_anther_mask),\
            test_another_labels
 
+if __name__ == '__main__':
+    train_mask,train_labels,vali_mask,vali_labels,test_mask,test_labels,test_another_mask,test_another_labels=generate_data()
+    from matplotlib import pyplot as plt
+    plt.imshow(train_mask[1000])
+    plt.show()
