@@ -42,3 +42,4 @@ class EarlyStoppingAtMinLoss(tf.keras.callbacks.Callback):
     def on_train_end(self, logs=None):
         if self.stopped_epoch > 0:
             print("Epoch %05d: early stopping" % (self.stopped_epoch + 1))
+            self.model.set_weights(self.best_weights)
